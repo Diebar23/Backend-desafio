@@ -36,7 +36,7 @@ class ProductManager {
 
         this.products.push(newProduct);
 
-        //Guardamos el array en el archivo
+        //Guardo el array en el archivo
 
         await this.guardarArchivo(this.products);
 
@@ -53,7 +53,7 @@ class ProductManager {
 
                 if(!buscado) {
                     console.log("Producto no encontrado");
-                }else {
+                } else {
                     console.log("Producto encontrado");
                     return buscado;
                 }
@@ -85,7 +85,7 @@ class ProductManager {
         }
     }
 
-    //Actualizamos algun producto
+    //Se actualiza algun producto
     async updateProduct(id, productoActualizado) {
         try {
             const arrayProductos = await this.leerArchivo();
