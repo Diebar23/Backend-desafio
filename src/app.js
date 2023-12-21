@@ -26,7 +26,7 @@ app.get("/products", async(req, res) => {
             return res.send(arrayConLimite);
         }
         return res.send(arrayProductos);
-        
+
     } catch (error) {
         console.log(error);
         return res.send("Error al procesar la solicitud");
@@ -34,7 +34,7 @@ app.get("/products", async(req, res) => {
 
 })    
 
-app.get("/products/:pid", async(res, req) => {
+app.get("/products/:pid", async(req, res) => {
     try{
         //Guardo el parametro
         let pid = parseInt(req.params.pid);
