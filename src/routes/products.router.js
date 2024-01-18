@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
             res.json(products);
         }
     } catch (error) {
-
         console.error("Error al obtener productos", error);
         res.status(500).json({
             error: "Error interno del servidor"
@@ -67,10 +66,10 @@ router.post("/", async (req, res) => {
 
 router.put("/:pid", async (req, res) => {
     const id = req.params.pid;
-    const productUpdated = req.body;
+    const updatedProduct = req.body;
 
     try {
-        await productManager.updateProduct(parseInt(id), productUpdated);
+        await productManager.updateProduct(parseInt(id), updatedProduct);
         res.json({
             message: "Producto actualizado exitosamente"
         });

@@ -35,7 +35,7 @@ class ProductManager {
         };
         
         if (arrayProducts.length > 0) {
-            ProductManager.ultId = arrayProductos.reduce((maxId, product) => Math.max(maxId, product.id), 0);
+            ProductManager.ultId = arrayProducts.reduce((maxId, product) => Math.max(maxId, product.id), 0);
         }
         
         newProduct.id = ++ProductManager.ultId; 
@@ -95,14 +95,14 @@ class ProductManager {
         }
     }
     //Se actualiza algun producto
-    async updateProduct(id, productUpdated) {
+    async updateProduct(id, updatedProduct) {
         try {
             const arrayProducts = await this.readFile();
 
             const index = arrayProducts.findIndex(item => item.id === id);
 
             if(index !== -1) {
-                arrayProducts[index] = { ...arrayProducts[index], ...updateProduct };
+                arrayProducts[index] = { ...arrayProducts[index], ...updatedProduct };
                 await this.saveFile(arrayProducts);
                 console.log("Producto actualizado");
             } else {

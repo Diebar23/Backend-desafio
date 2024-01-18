@@ -1,0 +1,27 @@
+h1 {
+    color:lightseagreen; 
+    text-align: center;
+}
+
+.cardsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    border: 2px solid #5917dc;
+    border-radius: 4px;
+    margin: 20px;
+    padding: 20px;
+    min-width: 400px;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin: 0 auto;
+}
