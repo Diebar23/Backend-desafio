@@ -15,9 +15,9 @@ const renderProducts = (products) => {
         card.classList.add("card");
         //Agregamos boton para eliminar: 
         card.innerHTML = `
-                <p>Id ${item.id} </p>
-                <p>Titulo ${item.title} </p>
-                <p>Precio ${item.price} </p>
+                <p>Id: ${item.id} </p>
+                <p>Titulo: ${item.title} </p>
+                <p>Precio: ${item.price} </p>
                 <button> Eliminar Producto </button>
         
         `;
