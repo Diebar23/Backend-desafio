@@ -10,6 +10,13 @@ h1 {
     flex-wrap: wrap;
 }
 
+.boxContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .card {
     border: 2px solid #5917dc;
     border-radius: 4px;
