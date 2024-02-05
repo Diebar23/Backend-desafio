@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
 const socket = require("socket.io");
-
 const PUERTO = 8080;
+require("./database.js"); //Inicializador de datos
 
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
@@ -25,40 +25,28 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
 //Listen
-const server = app.listen(PUERTO, () => {
+const httpServer = app.listen(PUERTO, () => {
     console.log(`Servidor escuchando en el puerto ${PUERTO}`);
 
 });
 
-//Socket.io
-//Crear una vista realTimeProducts.handlebars
+//chat en el ecommerce: 
+const MessageModel = require("./dao/models/message.model.js");
+const io = new socket.Server(httpServer);
 
 
-//Obtener array de productos
+io.on("connection",  (socket) => {
+    console.log("Nuevo usuario conectado");
 
-const ProductManager = require("./controllers/product-manager.js");
-const productManager = new ProductManager("./src/models/products.json");
+    socket.on("message", async data => {
 
-const io = socket(server);
+        //Guardo el mensaje en MongoDB: 
+        await MessageModel.create(data);
 
-io.on("connection", async (socket) => {
-    console.log("Nuevo cliente conectado");
-
-     //Enviamos el array de productos al cliente que se conectó:
-     socket.emit("products", await productManager.getProducts());    
-    
-     //Recibimos el evento "eliminarProducto" desde el cliente:
-     socket.on("deleteProduct", async (id) => {
-         await productManager.deleteProduct(id);
-
-         //Enviamos el array de productos actualizado a todos los productos:
-         io.sockets.emit("products", await productManager.getProducts());
-     });
-
-      //Recibimos el evento "agregarProducto" desde el cliente:
-    socket.on("addProduct", async (product) => {
-        await productManager.addProduct(product);
-        //Enviamos el array de productos actualizado a todos los productos:
-        io.sockets.emit("products", await productManager.getProducts());
-    });
-});
+        //Obtengo los mensajes de MongoDB y se los paso al cliente: 
+        const messages = await MessageModel.find();
+        console.log(messages);
+        io.sockets.emit("message", messages);
+     
+    })
+})

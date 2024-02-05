@@ -8,7 +8,7 @@ class ProductManager {
         this.path = path;
     }
     //Metodos
-    async addProduct ({title, description, price, code, stock, category, thumbnails }) {
+    async addProduct ({title, description, price, img, code, stock, category, thumbnails }) {
         try {
             const arrayProducts = await this.readFile();
 
@@ -27,10 +27,11 @@ class ProductManager {
             title,
             description,
             price,
+            img,
             code,
             stock,
-            status: true,
             category,
+            status: true,
             thumbnails: thumbnails || []            
         };
         

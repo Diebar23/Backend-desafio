@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router(); 
-const ProductManager = require("../controllers/product-manager.js"); 
-const productManager = new ProductManager("./src/models/products.json");
+const ProductManager = require("../dao/db/product-manager-db.js"); 
+const productManager = new ProductManager();
 
 
 //Listar todos los productos.
@@ -30,7 +30,7 @@ router.get("/:pid", async (req, res) => {
 
     try {
         
-        const product = await productManager.getProductById(parseInt(id)); 
+        const product = await productManager.getProductById(id); 
         if (!product) {
             return res.json({
                 error: "Producto no encontrado"
@@ -69,7 +69,7 @@ router.put("/:pid", async (req, res) => {
     const updatedProduct = req.body;
 
     try {
-        await productManager.updateProduct(parseInt(id), updatedProduct);
+        await productManager.updateProduct(id, updatedProduct);
         res.json({
             message: "Producto actualizado exitosamente"
         });
@@ -86,7 +86,7 @@ router.delete("/:pid", async (req, res) => {
     const id = req.params.pid;
 
     try {
-        await productManager.deleteProduct(parseInt(id));
+        await productManager.deleteProduct(id);
         res.json({
             message: "Producto eliminado exitosamente"
         });
