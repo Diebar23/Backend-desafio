@@ -1,23 +1,39 @@
 const express = require("express");
 const router = express.Router(); 
-const ProductManager = require("../dao/db/product-manager-db.js"); 
+const ProductManager = require("../controllers/product-manager-db.js"); 
 const productManager = new ProductManager();
 
 
-//Listar todos los productos.
+//Modificación Listado de los productos
 
 router.get("/", async (req, res) => {
     try {
-        const limit = req.query.limit;
-        const products = await productManager.getProducts();
-        if (limit) {
-            res.json(products.slice(0, limit));
-        } else {
-            res.json(products);
-        }
+        const { limit = 10, page = 1, sort, query } = req.query;
+
+        const products = await productManager.getProducts({
+            limit: parseInt(limit),
+            page: parseInt(page),
+            sort,
+            query,
+        });
+
+        res.json({
+            status: 'success',
+            payload: products,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            page: products.page,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: products.hasPrevPage ? `/api/products?limit=${limit}&page=${productos.prevPage}&sort=${sort}&query=${query}` : null,
+            nextLink: products.hasNextPage ? `/api/products?limit=${limit}&page=${productos.nextPage}&sort=${sort}&query=${query}` : null,
+        });
+
     } catch (error) {
         console.error("Error al obtener productos", error);
         res.status(500).json({
+            status: 'error',
             error: "Error interno del servidor"
         });
     }
@@ -53,7 +69,7 @@ router.post("/", async (req, res) => {
     try {
         await productManager.addProduct(newProduct);
         res.status(201).json({
-            message: "Producto agregado exitosamente"
+            message: "Producto agregado"
         });
     } catch (error) {
         console.error("Error al agregar producto", error);
@@ -71,7 +87,7 @@ router.put("/:pid", async (req, res) => {
     try {
         await productManager.updateProduct(id, updatedProduct);
         res.json({
-            message: "Producto actualizado exitosamente"
+            message: "Producto actualizado"
         });
     } catch (error) {
         console.error("Error al actualizar producto", error);
@@ -80,6 +96,7 @@ router.put("/:pid", async (req, res) => {
         });
     }
 });
+
 //Eliminar producto: 
 
 router.delete("/:pid", async (req, res) => {
