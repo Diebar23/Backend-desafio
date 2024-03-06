@@ -3,9 +3,40 @@ const router = express.Router();
 const UserModel = require("../models/user.model.js");
 const { isValidPassword } = require("../utils/hashBcrypt.js");
 const passport = require("passport");
+const generateToken = require("../utils/jsonwebtoken.js");
+
+//Login con JSON Web Token
+
+router.post("/login", async (req, res) => {
+    const {email, password} = req.body; 
+    try {
+        const user = await UserModel.findOne({email:email});
+
+        if(!user) {
+            return res.status(400).send({status:"error", message: "Usuario desconocido?"});
+        }
+
+        if(!isValidPassword(password, user)){
+            return res.status(400).send({status: "error", message: "Credenciales invalidas"});
+        }
+
+        //Si la contraseña es correcta, generamos el token. 
+        const token = generateToken({
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            id: user._id
+        });
+
+        res.send({status:"success", token});
+        
+    } catch (error) {
+        console.log("Error en al autenticación", error);
+        res.status(500).send({status: "error", message: "Error interno del servidor"});
+    }
+})
 
 
-//Login
 
 //Logout
 
@@ -16,27 +47,39 @@ router.get("/logout", (req, res) => {
     res.redirect("/login");
 })
 
-//CON PASSPORT: 
+// //CON PASSPORT: 
 
-router.post("/login", passport.authenticate("login", {failureRedirect: "/api/sessions/faillogin"}), async (req, res) => {
-    if(!req.user) return res.status(400).send({status: "error", message: "Credenciales invalidas"});
+// router.post("/login", passport.authenticate("login", {failureRedirect: "/api/sessions/faillogin"}), async (req, res) => {
+//     if(!req.user) return res.status(400).send({status: "error", message: "Credenciales invalidas"});
 
-    req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        age: req.user.age,
-        email: req.user.email
-    };
+//     req.session.user = {
+//         first_name: req.user.first_name,
+//         last_name: req.user.last_name,
+//         age: req.user.age,
+//         email: req.user.email
+//     };
 
-    req.session.login = true;
+//     req.session.login = true;
 
-    res.redirect("/profile");
-})
+//     res.redirect("/profile");
+// })
 
-router.get("/faillogin", async (req, res ) => {
-    console.log("Fallo en el codigo")
-    res.send({error: "Error de sistema"});
-})
+// router.get("/faillogin", async (req, res ) => {
+//     console.log("Fallo en el codigo")
+//     res.send({error: "Error de sistema"});
+//})
+
+// VERSION PARA GITHUB: 
+
+// router.get("/github", passport.authenticate("github", {scope: ["user:email"]}), async (req, res) => {})
+
+// router.get("/githubcallback", passport.authenticate("github", {failureRedirect: "/login"}), async (req, res) => {
+//     //La estrategía de github nos retornará el usuario, entonces lo agregamos a nuestro objeto de session. 
+//     req.session.user = req.user; 
+//     req.session.login = true; 
+//     res.redirect("/profile");
+// })
+// */
 
 
 module.exports = router;
