@@ -66,20 +66,22 @@ router.get("/carts/:cid", async (req, res) => {
 
 router.get("/login", (req, res) => {
 
-   if (req.session.login) {
-       return res.redirect("/profile");
-   }
+//    if (req.session.login) {
+//        return res.redirect("/profile");
+//    }
 
-   res.render("login");
+//    res.render("login");
+res.render("login");
 });
 
 // Ruta para el formulario de registro
 
 router.get("/register", (req, res) => {
    
-   if (req.session.login) {
-       return res.redirect("/profile");
-   }
+   // if (req.session.login) {
+   //     return res.redirect("/profile");
+   // }
+   // res.render("register");
    res.render("register");
 });
 
@@ -87,12 +89,13 @@ router.get("/register", (req, res) => {
 
 router.get("/profile", (req, res) => {
    
-   if (!req.session.login) {
+   // if (!req.session.login) {
        
-       return res.redirect("/login");
-   }
+   //     return res.redirect("/login");
+   // }
 
-   res.render("profile", { user: req.session.user });
+   // res.render("profile", { user: req.session.user });
+   res.render("profile");
 });
 
 
