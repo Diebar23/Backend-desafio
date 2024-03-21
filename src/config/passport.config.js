@@ -1,22 +1,21 @@
-//npm i passport passport-local
 
 //Importamos los módulos:
 
-const passport = require("passport");
-const local = require("passport-local");
+import passport from "passport";
+import local from "passport-local";
 
 //Traemos el UserModel y las funciones de bcrypt
 
-const UserModel = require("../models/user.model.js");
-const { createHash, isValidPassword } = require("../utils/hashBcrypt.js");
+import UserModel from "../models/user.model.js";
+import { createHash, isValidPassword } from "../utils/hashbcrypt.js";
 
 //Passport con GitHub:
 
-const GitHubStrategy = require("passport-github2");
+// const GitHubStrategy = require("passport-github2");
 
 const LocalStrategy = local.Strategy;
 
-const initializePassport = () => {
+export const initializePassport = () => {
 
     passport.use("register", new LocalStrategy({
         //Acceder al objeto request
@@ -64,9 +63,11 @@ const initializePassport = () => {
             }
             //Si existe verifico la contraseña: 
             
-            if(!isValidPassword(password, user)) return done(null, false);
+            if(!isValidPassword(password, user)) {
+                return done(null, false);
+            }
+            
             return done(null, user);
-
         } catch (error) {
             return done(error);
         }
@@ -82,36 +83,36 @@ const initializePassport = () => {
     })
 
     //Estrategia con GitHub: 
-    passport.use("github", new GitHubStrategy({
-        clientID: "Iv1.7cddb704597563d0",
-        clientSecret: "45a1274c1d95f16706863ce2305836ad6369e3a3",
-        callbackURL: "http://localhost:8080/api/sessions/githubcallback"
-    }, async (accessToken, refreshToken, profile, done) => {
-        console.log("Profile: ", profile);
-        try {
-            let user = await UserModel.findOne({ email: profile._json.email })
+    // passport.use("github", new GitHubStrategy({
+    //     clientID: "Iv1.7cddb704597563d0",
+    //     clientSecret: "45a1274c1d95f16706863ce2305836ad6369e3a3",
+    //     callbackURL: "http://localhost:8080/api/sessions/githubcallback"
+    // }, async (accessToken, refreshToken, profile, done) => {
+    //     console.log("Profile: ", profile);
+    //     try {
+    //         let user = await UserModel.findOne({ email: profile._json.email })
 
-            if (!user) {
-                let newUser = {
-                    first_name: profile._json.name,
-                    last_name: "",
-                    age: 48,
-                    email: profile._json.email,
-                    password: ""
-                }
-                let result = await UserModel.create(newUser);
-                done(null, result)
-            } else {
-                done(null, user);
-            }
+    //         if (!user) {
+    //             let newUser = {
+    //                 first_name: profile._json.name,
+    //                 last_name: "",
+    //                 age: 48,
+    //                 email: profile._json.email,
+    //                 password: ""
+    //             }
+    //             let result = await UserModel.create(newUser);
+    //             done(null, result)
+    //         } else {
+    //             done(null, user);
+    //         }
 
-        } catch (error) {
-            return done(error);
-        }
+    //     } catch (error) {
+    //         return done(error);
+    //     }
 
-    }))
+    // }))
 
 }
 
 
-module.exports = initializePassport;
+// module.exports = initializePassport;

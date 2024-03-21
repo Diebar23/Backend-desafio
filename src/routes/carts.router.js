@@ -1,8 +1,8 @@
-const express = require("express"); 
+import express from "express"; 
 const router = express.Router(); 
-const CartManager = require("../controllers/cart-manager-db.js"); 
+import CartManager from "../controllers/cart-manager-db.js"; 
 const cartManager = new CartManager();
-const CartModel = require("../models/cart.model.js");
+import CartModel from "../models/cart.model.js";
 
 
 //Crear carrito nuevo
@@ -145,4 +145,4 @@ router.delete('/:cid', async (req, res) => {
 
 
 
-module.exports = router; 
+export default router; 

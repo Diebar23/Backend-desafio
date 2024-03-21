@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router(); 
-const ProductManager = require("../controllers/product-manager-db.js");
-const CartManager = require("../controllers/cart-manager-db.js");
+import ProductManager from "../controllers/product-manager-db.js";
+import CartManager from "../controllers/cart-manager-db.js";
 const productManager = new ProductManager();
 const cartManager = new CartManager();
 
@@ -65,39 +65,31 @@ router.get("/carts/:cid", async (req, res) => {
 // Ruta para el formulario de login
 
 router.get("/login", (req, res) => {
-
-//    if (req.session.login) {
-//        return res.redirect("/profile");
-//    }
-
-//    res.render("login");
-res.render("login");
+   res.render("login");
 });
 
 // Ruta para el formulario de registro
 
 router.get("/register", (req, res) => {
-   
-   // if (req.session.login) {
-   //     return res.redirect("/profile");
-   // }
-   // res.render("register");
    res.render("register");
 });
 
+router.get("/", (req, res) => {
+   res.render("main", {user:req.session.user})
+})
 // Ruta para la vista de perfil
 
-router.get("/profile", (req, res) => {
+// router.get("/profile", (req, res) => {
    
-   // if (!req.session.login) {
+// if (!req.session.login) {
        
-   //     return res.redirect("/login");
-   // }
+//     return res.redirect("/login");
+//}
 
-   // res.render("profile", { user: req.session.user });
-   res.render("profile");
-});
+//    // res.render("profile", { user: req.session.user });
+//    res.render("profile");
+// });
 
 
 
-module.exports = router; 
+export default router;

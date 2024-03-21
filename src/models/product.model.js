@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 //Creamos el schema y el model de productos: 
 
@@ -43,4 +43,4 @@ const productSchema = new mongoose.Schema({
 const ProductModel = mongoose.model("product", productSchema);
 
 
-module.exports = ProductModel;
+export default ProductModel;

@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const UserModel = require("../models/user.model.js");
-const { createHash } = require("../utils/hashBcrypt.js");
-const passport = require("passport");
-const generateToken = require("../utils/jsonwebtoken.js");
+import UserModel from "../models/user.model.js";
+import { createHash } from "../utils/hashbcrypt.js";
+import passport from "passport";
+import generateToken from "../utils/jsonwebtoken.js";
 
 //Registro con JSON Web Token:
 
@@ -53,4 +53,4 @@ router.post("/", async (req, res) => {
 //     res.send({error: "Registro fallido"});
 // })
 
-module.exports = router; 
+export default router;

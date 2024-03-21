@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const private_key = "palabrasecretaparatoken";
 
@@ -8,4 +8,5 @@ const generateToken = (user) => {
     return token; 
 }
 
-module.exports = generateToken;
+// module.exports = generateToken;
+export default generateToken;
