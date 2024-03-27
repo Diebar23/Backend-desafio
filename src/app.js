@@ -9,6 +9,7 @@ import imageRouter from "./routes/image.router.js";
 import userRouter from "./routes/user.router.js";
 import sessionRouter from "./routes/session.router.js";
 const PUERTO = 8080;
+import cors from "cors";
 import "../src/database.js";
 
 import productsRouter from "./routes/products.router.js";
@@ -32,6 +33,7 @@ const storage = multer.diskStorage({
     }
 })
 app.use(multer({storage}).single("image"));
+app.use(cors());
 //Session
 app.use(session({
     secret:"mi_secreto",
