@@ -20,7 +20,7 @@ const {mongo_url} = configObject;
             }
     
             this.#instance = new DataBase();
-            console.log("Conexión exitosa!!");
+            console.log("Conexión exitosa");
             return this.#instance;
         }
     }

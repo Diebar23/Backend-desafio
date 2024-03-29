@@ -78,7 +78,16 @@ router.post("/login", passport.authenticate("login"), (req, res) => {
 
     req.session.login = true;
 
-    res.redirect("/");
+    res.redirect("/products");
+})
+
+//GET - Currente
+router.get("/current",(req, res) => {
+    if (req.session && req.session.user) {
+        res.json(req.session.user);
+    } else {
+        res.status(401).json({ status: "error", message: "Ususario no logueado"});
+    }
 })
 
 //Ruta para cerrar la sesión
@@ -110,6 +119,7 @@ router.get("/profile", (req, res) => {
 //     res.redirect("/profile");
 // })
 // */
+
 
 
 export default router;
