@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import UserModel from "../models/user.model.js";
+import UserModel from "../dao/models/user.model.js";
 import { isValidPassword } from "../utils/hashbcrypt.js";
 import passport from "passport";
 import generateToken from "../utils/jsonwebtoken.js";

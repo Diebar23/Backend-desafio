@@ -6,7 +6,7 @@ import local from "passport-local";
 
 //Traemos el UserModel y las funciones de bcrypt
 
-import UserModel from "../models/user.model.js";
+import UserModel from "../dao/models/user.model.js";
 import { createHash, isValidPassword } from "../utils/hashbcrypt.js";
 
 //Passport con GitHub:

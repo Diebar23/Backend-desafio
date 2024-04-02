@@ -1,8 +1,8 @@
 import express from "express"; 
 const router = express.Router(); 
-import CartManager from "../controllers/cart-manager-db.js"; 
+import CartManager from "../service/cart.service.js"; 
 const cartManager = new CartManager();
-import CartModel from "../models/cart.model.js";
+import CartModel from "../dao/models/cart.model.js";
 
 
 //Crear carrito nuevo

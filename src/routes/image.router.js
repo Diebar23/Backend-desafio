@@ -1,5 +1,5 @@
 import { Router } from "express";
-import ImageModel from "../models/image.js";
+import ImageModel from "../dao/models/image.js";
 import {promises as fs} from "fs";
 const router = Router();
 
