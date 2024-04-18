@@ -1,19 +1,14 @@
-<div class="upload">
-    <form action="/login" method="POST" class="upload__container">
-        <h2>Inicio de Sesión</h2>
-        <div class="upload__container--title">
-            <input type="text" id="email" name="email" placeholder="Email" required>
-        </div>
-
-        <div class="upload__container--title">
-            <input type="text" id="password" name="password" placeholder="Password" required>
-        </div>
-
-        <div class="upload__container--title">
-            <button type="submit" class="btn"> Iniciar Sesión </button>
-        </div>
-    </form>
-</div>
+<h1>Inicio de Sesion</h1>
+<form class="formulario" action="/api/users/login" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit" class="btnMios">Login</button>
+    
+</form>
 
 {{!-- <h1>Login</h1>
 <form action="/api/sessions/login" method="POST">

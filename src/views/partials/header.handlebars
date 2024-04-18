@@ -1,8 +1,12 @@
 <header>
-    <a href="/" class="logo"> MyEcommerce </a>
+    <div class="container-fluid">
+     <img src="https://banner2.cleanpng.com/20180519/jjs/kisspng-e-commerce-logo-electronic-business-5b00d2d0918d84.2335269315267806245962.jpg" alt="Logo de la tienda">
 
-    <nav>
-        <ul>
+        <a href="/api/users/profile">Mi perfil</a>
+      
+
+    <nav class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav fuentesNav ms-auto">
             {{#if user}}
                 <li><a href="/profile"> Hola {{user.first_name}} </a></li>
                 <li><a href="/logout"> Cerrar Sesión</a></li>
@@ -12,4 +16,5 @@
             {{/if}}
         </ul>
     </nav>
+    </div>
 </header>

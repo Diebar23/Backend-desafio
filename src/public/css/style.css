@@ -1,3 +1,8 @@
+h1 {
+    color:rgb(14, 57, 231); 
+    text-align: center;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -34,6 +39,29 @@ nav a:hover {
     color: #d400ff;
    
 }
+
+nav li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 15px;
+    color: gray;
+    border-left: 1px solid rgb(37, 239, 216);
+    border-right: 1px solid rgb(37, 239, 216);
+    padding: 0 15px;
+}
+
+.formulario {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    .header{
+        padding: 10px;
+    }}
 
 nav ul {
     list-style-type: none;
@@ -161,3 +189,10 @@ button {
     width: 300px;
     margin: 0 auto;
 } */
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}

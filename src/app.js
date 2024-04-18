@@ -1,50 +1,31 @@
-import express from "express";
+const express = require("express");
 const app = express();
-import cookieParser from "cookie-parser";
-import MongoStore from "connect-mongo";
-import exphbs from "express-handlebars";
-import multer from "multer";
-import session from "express-session";
-import imageRouter from "./routes/image.router.js";
-import userRouter from "./routes/user.router.js";
-import sessionRouter from "./routes/session.router.js";
+const cookieParser = require("cookie-parser");
+const exphbs = require("express-handlebars");
+
 const PUERTO = 8080;
-import cors from "cors";
-import "../src/database.js";
+require("./database.js");
 
-import productsRouter from "./routes/products.router.js";
-import cartsRouter from "./routes/carts.router.js";
-import viewsRouter from "./routes/views.router.js";
+const productsRouter = require("./routes/products.router.js");
+const cartsRouter = require("./routes/carts.router.js");
+const viewsRouter = require("./routes/views.router.js");
+const userRouter = require("./routes/user.router.js");
 
-import passport from "passport";
-import { initializePassport } from "./config/passport.config.js";
+const passport = require("passport");
+const initializePassport = require("./config/passport.config.js");
 
 //Middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); 
 app.use(express.static("./src/public"));
+
+//Passport
 app.use(cookieParser());
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./src/public/img");
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
-})
-app.use(multer({storage}).single("image"));
-app.use(cors());
-//Session
-app.use(session({
-    secret:"mi_secreto",
-    resave: false,
-    saveUninitialized: false
-}))
-
-initializePassport();
 app.use(passport.initialize());
-app.use(passport.session());
+initializePassport();
 
+
+//Handlebars
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
@@ -53,18 +34,19 @@ app.set("views", "./src/views");
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/", viewsRouter);
-
 app.use("/api/users", userRouter);
-app.use("/api/sessions", sessionRouter);
 app.use("/", viewsRouter);
 
-app.use("/", imageRouter);
-app.use("/", viewsRouter);
-app.use("/", sessionRouter);
+//AuthMiddleware
+const authMiddleware = require("./middleware/authmiddleware.js");
+app.use(authMiddleware);
 
 //Listen
-app.listen(PUERTO, () => {
+const httpServer = app.listen(PUERTO, () => {
     console.log(`Servidor escuchando en el puerto ${PUERTO}`);
 
 });
+
+///Websockets: 
+const SocketManager = require("./sockets/socketmanager.js");
+new SocketManager(httpServer);
