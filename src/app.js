@@ -10,6 +10,7 @@ const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const userRouter = require("./routes/user.router.js");
+const errorManager = require("./middleware/error.js");
 
 const passport = require("passport");
 const initializePassport = require("./config/passport.config.js");
@@ -18,6 +19,7 @@ const initializePassport = require("./config/passport.config.js");
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); 
 app.use(express.static("./src/public"));
+
 
 //Passport
 app.use(cookieParser());
@@ -36,6 +38,9 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/users", userRouter);
 app.use("/", viewsRouter);
+
+app.use("/users", userRouter);
+app.use(errorManager)
 
 //AuthMiddleware
 const authMiddleware = require("./middleware/authmiddleware.js");
