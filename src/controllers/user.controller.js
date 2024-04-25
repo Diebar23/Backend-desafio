@@ -2,7 +2,7 @@ const UserModel = require("../models/user.model.js");
 const CartModel = require("../models/cart.model.js");
 const jwt = require("jsonwebtoken");
 const { createHash, isValidPassword } = require("../utils/hashbcryp.js");
-const UserDTO = require("../dto/user.dto..js");
+const UserDTO = require("../dto/user.dto.js");
 
 class UserController {
     async register(req, res) {
@@ -27,11 +27,11 @@ class UserController {
 
             await newUser.save();
 
-            const token = jwt.sign({ user: newUser }, "ecommerce", {
+            const token = jwt.sign({ user: newUser }, "coderhouse", {
                 expiresIn: "1h"
             });
 
-            res.cookie("commerceCookieToken", token, {
+            res.cookie("coderCookieToken", token, {
                 maxAge: 2000000,
                 httpOnly: true
             });
@@ -57,11 +57,11 @@ class UserController {
                 return res.status(401).send("Contraseña incorrecta");
             }
 
-            const token = jwt.sign({ user: userFound }, "ecommerce", {
+            const token = jwt.sign({ user: userFound }, "coderhouse", {
                 expiresIn: "1h"
             });
 
-            res.cookie("commerceCookieToken", token, {
+            res.cookie("coderCookieToken", token, {
                 maxAge: 2000000,
                 httpOnly: true
             });
@@ -83,7 +83,7 @@ class UserController {
     }
 
     async logout(req, res) {
-        res.clearCookie("commerceCookieToken");
+        res.clearCookie("coderCookieToken");
         res.redirect("/login");
     }
 

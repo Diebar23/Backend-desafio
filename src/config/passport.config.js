@@ -2,12 +2,12 @@ const passport = require("passport");
 const jwt = require("passport-jwt");
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
-const UserModel = require("../models/user.model");
+const UserModel = require("../models/user.model.js");
 
 const initializePassport = () => {
     passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]), 
-        secretOrKey: "ecommerce"
+        secretOrKey: "coderhouse"
     }, async (jwt_payload, done) => {
         try {
          
@@ -25,7 +25,7 @@ const initializePassport = () => {
 const cookieExtractor = (req) => {
     let token = null;
     if(req && req.cookies) {
-        token = req.cookies["commerceCookieToken"]
+        token = req.cookies["coderCookieToken"]
     }
     return token;
 }

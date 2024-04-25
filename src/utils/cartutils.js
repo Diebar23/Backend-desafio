@@ -12,7 +12,6 @@ const generateUniqueCode = () => {
     return code + '-' + timestamp;
 }
 
-// Función para calcular el total de la compra
 const totalCalculate = (products) => {
     let total = 0;
 
