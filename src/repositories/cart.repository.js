@@ -142,7 +142,7 @@ async emptyCart(cartId) {
     } catch (error) {
         throw new Error("Error");
     }
-}
+  }
 }
 
 module.exports = CartRepository;

@@ -34,7 +34,7 @@ class ViewsController {
             console.log(cartId);
 
             res.render("products", {
-                productos: newArray,
+                products: newArray,
                 hasPrevPage,
                 hasNextPage,
                 prevPage: page > 1 ? parseInt(page) - 1 : null,
@@ -98,7 +98,7 @@ class ViewsController {
 
     async renderRealTimeProducts(req, res) {
         try {
-            res.render("realtimeproducts");
+            res.render("realtimeproducts", {role: usuario.role, email: user.email});
         } catch (error) {
             console.log("error en la vista real time", error);
             res.status(500).json({ error: "Error interno del servidor" });
@@ -111,6 +111,23 @@ class ViewsController {
 
     async renderHome(req, res) {
         res.render("home");
+    }
+
+    //Tercer integradora: 
+    async renderPasswordReset(req, res) {
+        res.render("passwordreset");
+    }
+
+    async renderPasswordChange(req, res) {
+        res.render("passwordchange");
+    }
+
+    async renderConfirmation(req, res) {
+        res.render("confirmation-send");
+    }
+
+    async renderPremium(req, res) {
+        res.render("panel-premium");
     }
 }
 

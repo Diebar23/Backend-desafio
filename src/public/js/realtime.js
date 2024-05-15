@@ -1,4 +1,6 @@
 const socket = io(); 
+const role = document.getElementById("role").textContent;
+const email = document.getElementById("email").textContent;
 
 socket.on("products", (data) => {
 
@@ -28,8 +30,17 @@ const renderProducts = (products) => {
         //Agrega el evento al boton de eliminar: 
 
         card.querySelector("button").addEventListener("click", ()=> {
-            deleteProduct(item._id);
-        })
+            if (role === "premium" && item.owner === email) {
+                deleteProduct(item._id);
+            } else if (role === "admin") {
+                deleteProduct(item._id);
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "No tenes permiso para borrar ese producto",
+                })
+            }
+        });
     })
 }
 
@@ -46,6 +57,11 @@ document.getElementById("btnEnviar").addEventListener("click", () => {
 
 
 const addProduct = () => {
+    const role = document.getElementById("role").textContent;
+    const email = document.getElementById("email").textContent;
+
+    const owner = role === "premium" ? email : "admin";
+
     const product = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
@@ -55,6 +71,7 @@ const addProduct = () => {
         stock: document.getElementById("stock").value,
         category: document.getElementById("category").value,
         status: document.getElementById("status").value === "true",
+        owner
     };
 
     socket.emit("addProduct", product);

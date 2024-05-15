@@ -47,7 +47,7 @@ class ProductController {
             const id = req.params.pid;
             const productUpdated = req.body;
 
-            const resultado = await productRepository.updateProduct(id, productUpdated);
+            const result = await productRepository.updateProduct(id, productUpdated);
             res.json(result);
         } catch (error) {
             res.status(500).send("Error al actualizar producto");
@@ -56,8 +56,9 @@ class ProductController {
 
     async deleteProduct(req, res) {
         const id = req.params.pid;
+        const user = req.user; 
         try {
-            let responce = await productRepository.deleteProduct(id);
+            let responce = await productRepository.deleteProduct(id, user);
 
             res.json(responce);
         } catch (error) {

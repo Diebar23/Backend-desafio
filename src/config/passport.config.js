@@ -7,7 +7,7 @@ const UserModel = require("../models/user.model.js");
 const initializePassport = () => {
     passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]), 
-        secretOrKey: "coderhouse"
+        secretOrKey: "codercurso"
     }, async (jwt_payload, done) => {
         try {
          
