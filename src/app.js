@@ -48,8 +48,8 @@ app.use("/", viewsRouter);
 const authMiddleware = require("./middleware/authmiddleware.js");
 app.use(authMiddleware);
 
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUiExpress from "swagger-ui-express";
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUiExpress = require("swagger-ui-express");
 
 const swaggerOptions = {
     definition: {
