@@ -1,9 +1,9 @@
-aths:
+paths:
   /api/carts:
     get:
       summary: Obtenemos todos los carritos de la BD
       tags:
-        - carts
+        - Carts
       responses:
         "200":
           description: Obtienen todos los carritoss correctamente
@@ -12,13 +12,13 @@ aths:
               schema:
                 type: array
                 items:
-                  $ref: "#components/schemas/carts"
+                  $ref: "#components/schemas/Carts"
         "500":
           description: Error interno del servidor
     post:
       summary: Este endpoint crea un carrito
       tags: 
-       - carts
+       - Carts
       requestBody:
         required: true
         content: 
@@ -32,7 +32,7 @@ aths:
     get:
       summary: Obtiene un solo carrito por ID
       tags: 
-        - carts
+        - Carts
       parameters: 
       - name: uid
         in: path
@@ -40,7 +40,7 @@ aths:
         description: id del carrito que se quire buscar
         schema:
           type: string
-           responses:
+      responses:
         "200":
           description: Carrito encontrado
           content:
@@ -48,13 +48,13 @@ aths:
               schema:
                 type: array
                 items:
-                  $ref: "#components/schemas/cart"
+                  $ref: "#components/schemas/Cart"
         "500":
           description: Error interno del servidor
     put:
       summary: Actualizamos carrito por ID
       tags: 
-        - carts
+        - Carts
       parameters: 
       - name: uid
         in: path
